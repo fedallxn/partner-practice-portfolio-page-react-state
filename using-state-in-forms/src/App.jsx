@@ -1,33 +1,28 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import FeedbackForm from './components/FeedbackForm'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  //initializing state for name, email, and feedback
+  const [formData, setFormData] = useState({
+    //set all as empty string bc if it was prefilled, submit would automatically work without use putting in their own data
+    name: "",
+    email: "",
+    feedback: ""
+  })
+  //single function to handle all onChanges
+  function handleChange(e) {
+    const {name, value} = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   return (
+    //passing formData and the handleChange function as props
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <FeedbackForm formData={formData} handleChange={handleChange} />
     </>
   )
 }
